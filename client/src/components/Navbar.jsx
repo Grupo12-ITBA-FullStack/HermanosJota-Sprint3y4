@@ -4,8 +4,9 @@ export default function Navbar({
   cartItems = [],
   onRemoveFromCart = () => {},
   onCloseCart = () => {},
+  onNavigate = () => {},
 }) {
-  const [menuOpen, setMenuOpen] = useState(false); // por si luego ocultás menú en mobile
+  const [menuOpen, setMenuOpen] = useState(false); 
   const [cartOpen, setCartOpen] = useState(false);
   const navRef = useRef(null);
 
@@ -26,10 +27,10 @@ export default function Navbar({
   }, []);
 
   return (
-    <header className={/* podrías alternar nav-hide aquí si querés */ ""}>
+    <header className={""}>
       <div>
         <nav ref={navRef}>
-          <div className="logo" onClick={() => (window.location.href = "/")}>
+          <div className="logo" onClick={(e) => { e.preventDefault(); onNavigate('home'); }}>
             <img src="/img/logo.svg" alt="Logo Hermanos Jota" />
             <span className="logo-tit">Hermanos Jota</span>
           </div>
@@ -53,13 +54,12 @@ export default function Navbar({
           <div
             className="nav-menu"
             id="nav-menu"
-            style={{ display: menuOpen ? "block" : undefined }} // si querés ocultarlo en mobile
+            style={{ display: menuOpen ? "block" : undefined }} 
           >
             <ul className="nav-links" onClick={() => setMenuOpen(false)}>
-              {/* cambia a <Link> si usás React Router */}
-              <li><a href="/">Inicio</a></li>
-              <li><a href="/catalogo">Catálogo</a></li>
-              <li><a href="/contacto">Contacto</a></li>
+              <li><button className="nav-btn" onClick={() => onNavigate('home')}>Inicio</button></li>
+              <li><button className="nav-btn" onClick={() => onNavigate('catalog')}>Catálogo</button></li>
+              <li><button className="nav-btn" onClick={() => onNavigate('contact')}>Contacto</button></li>
             </ul>
 
             {/* acciones (carrito) */}
@@ -70,11 +70,10 @@ export default function Navbar({
                   e.stopPropagation();
                   setCartOpen((v) => !v);
                 }}
+                role="button"
+                aria-label="Abrir carrito"
               >
-                <span className="material-symbols-outlined" id="cart-icon">
-                  shopping_cart
-                </span>
-                {/* tu CSS pone display:none; lo forzamos cuando hay items */}
+                <span id="cart-icon">🛒</span>
                 <span
                   id="cart-count"
                   style={{ display: cartCount > 0 ? "block" : "none" }}
@@ -85,7 +84,7 @@ export default function Navbar({
 
               <div
                 id="cart-dropdown"
-                style={{ display: cartOpen ? "block" : "none" }} // tu CSS usa display:none por defecto
+                style={{ display: cartOpen ? "block" : "none" }} 
               >
                 <h3>Carrito</h3>
 
