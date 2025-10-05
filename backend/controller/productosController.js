@@ -1,5 +1,4 @@
-const productosController = require('../controller/productosController');
-const { default: productos } = require('../model/productos');
+const productos = require('../model/productos');
 
 
 

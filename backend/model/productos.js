@@ -1,4 +1,4 @@
-module.exports[ 
+module.exports = [ 
         {
             id: 1,
             nombre: "Sofa Patagonia",
