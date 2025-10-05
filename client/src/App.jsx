@@ -28,7 +28,7 @@ export default function App() {
 
   const openProduct = (product) => setView({ name: 'detail', payload: product });
   const goHome = () => setView({ name: 'home', payload: null });
-  const openContact = () => setView({ name: 'contact', payload: null });
+  
 
   return (
     <>

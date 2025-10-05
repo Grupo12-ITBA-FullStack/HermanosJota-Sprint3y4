@@ -622,10 +622,10 @@ h1 {
 }
 
 .product-grid {
-    padding-top: 20px;
+    padding: 25px;
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 35px;
     background-color: var(--c-alabastro);
 }
 
@@ -667,8 +667,15 @@ h1 {
 
 .product-img {
     width: 100%;
-    height: 400px;
+    height: 260px; /* reduced from 400 to make grid images smaller */
     object-fit: cover;
+    display: block;
+}
+
+@media (max-width: 768px) {
+    .product-img {
+        height: 180px;
+    }
 }
 
 
