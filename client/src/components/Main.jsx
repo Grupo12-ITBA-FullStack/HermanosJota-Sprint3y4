@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 const API = process.env.REACT_APP_API_URL || "http://localhost:4000";
 
-export default function Main() {
+export default function Main({ onSelect = () => {}, onNavigate = () => {} }) {
   const [destacados, setDestacados] = useState([]);
   const [loading, setLoading] = useState(true);
   const [err, setErr] = useState(null);
@@ -32,7 +32,7 @@ export default function Main() {
             Nuestra comunicación refleja la esencia artesanal y la calidez humana que
             define cada pieza que creamos
           </p>
-          <a href="/catalogo" className="boton-hero">Comprar Ahora</a>
+          <button className="boton-hero" onClick={() => onNavigate('catalog')}>Comprar Ahora</button>
         </div>
       </section>
 
@@ -69,7 +69,7 @@ export default function Main() {
             <h1 className="tit">Nuestros Productos</h1>
             <div className="container-productDes">
               <h2>Descubrí nuestra colección única</h2>
-              <a href="/catalogo" className="boton-hero">Explorar catalogo</a>
+              <button className="boton-hero" onClick={() => onNavigate('catalog')}>Explorar catalogo</button>
             </div>
           </div>
 
@@ -79,22 +79,23 @@ export default function Main() {
           {!loading && !err && (
             <div id="destacados" className="product-grid">
               {destacados.map(p => (
-                <a
+                <div
                   key={p.id}
                   className="product-card"
-                  href={`/catalogo#prod-${p.id}`}
+                  onClick={() => onSelect(p)}
                   title={p.nombre}
+                  style={{ cursor: 'pointer' }}
                 >
                   <img
                     className="product-img"
-                    src={p.imagen || `https://picsum.photos/seed/${p.id}/800/600`}
+                    src={p.imagen || `/img/hero.jpg`}
                     alt={p.nombre}
                   />
                   <div className="product-info">
                     <h3>{p.nombre}</h3>
                     <p className="product-price">${p.precio?.toLocaleString("es-AR")}</p>
                   </div>
-                </a>
+                </div>
               ))}
               {destacados.length === 0 && (
                 <div className="empty">No hay productos destacados por ahora.</div>
